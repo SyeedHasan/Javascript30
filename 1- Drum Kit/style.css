@@ -33,6 +33,7 @@ body,html {
 }
 
 .playing {
+  /*In the given transition time, scales the key/div */
   transform: scale(1.1);
   border-color: #ffc600;
   box-shadow: 0 0 1rem #ffc600;

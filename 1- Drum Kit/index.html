@@ -66,24 +66,7 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<script>
-	window.addEventListener('keydown', function(e){
-
-	const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
-	//EXPLORE TEMPLATE LITERALS	
-
-	//Stop the function from running on non-existing keys
-	if(!audio){
-		return ;
-	}
-
-	//Set the currentTime to Zero when the key is pressed mutliple times
-	audio.currentTime = 0;
-	audio.play();
-}) 
-
-</script>
-
+<script type="text/javascript" src="script.js"></script>
 
 
 </body>
