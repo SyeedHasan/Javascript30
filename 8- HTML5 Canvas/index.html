@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+	const canvas = document.querySelector('#draw');
+	//Contexts are the elements which are drawn upon not the canvas.
+	const ctx = canvas.getContext('2d');
+
+	//Fit all over the window's width and height.
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+
+	//Blend modes
+	// ctx.globalCompositeOperation = 'multiply';
+
+	//How the line ends, in a round.
+	ctx.lineJoin = 'round';
+	ctx.lineCap = 'round';
+
+	let isDrawing = false; // or use var
+	//To turn off when mouse is up
+
+	let lastX = 0;
+	let lastY = 0; 
+	//Where the line ends, its co-ordinates
+	let hue = 0;
+	ctx.lineWidth = 0;
+	//Visit mother-effing HSL for different values,
+	let direction = true;
+
+
+	function draw(event){
+		if(!isDrawing)//Stop when not moused down
+			return;
+
+		//Color of the stroke
+		ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+
+		ctx.beginPath();
+		//Start from and go to,
+		//Start with X,Y and move to another X,Y
+		ctx.moveTo(lastX, lastY);
+		ctx.lineTo(event.offsetX, event.offsetY); //Returned from the mouse event which was logged before. Mouse positions I guess.
+		ctx.stroke(); //This produces the lines
+
+		//Change these values to the last drawn lines X and Y.
+		lastX = event.offsetX;
+		lastY = event.offsetY;
+
+		hue++;
+		//Changes color after every call
+		if (hue >= 360) //Reset the hue
+			hue = 0;
+
+		if(ctx.lineWidth >= 200 || ctx.lineWidth <=1)
+			direction = !direction;
+
+		if(direction){ //After hundred, fill direction and start opposite
+			ctx.lineWidth++;
+		}
+		else {
+			ctx.lineWidth--;
+		}
+	}
+
+	
+
+	//Whenever a mouse activity is noticed on the canvas,
+	canvas.addEventListener('mousemove', draw);
+
+	//When mouse is down, set to true else false.
+	canvas.addEventListener('mousedown', (event) => {
+		isDrawing = true;
+		//Update values before the mousemove is actually run
+		lastX = event.offsetX;
+		lastY = event.offsetY;
+	});
+
+	canvas.addEventListener('mouseup', () => isDrawing = false);
+	canvas.addEventListener('mouseout', () => isDrawing = false);
+
+
+</script>
+
+<style>
+  html, body {
+    margin:0;
+  }
+</style>
+
+</body>
+</html>
